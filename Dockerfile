@@ -13,7 +13,7 @@ RUN VERSION=${version} PLUGINS=${plugins} ENABLE_TELEMETRY=false /bin/sh /usr/bi
 #
 # Final stage
 #
-FROM alpine:3.8
+FROM alpine:edge
 # process wrapper
 LABEL maintainer "sebs sebsclub@outlook.com"
 
@@ -21,7 +21,7 @@ LABEL maintainer "sebs sebsclub@outlook.com"
 ARG TZ="Asia/Shanghai"
 
 ENV TZ ${TZ}
-ENV V2RAY_VERSION v4.19.1 
+ENV V2RAY_VERSION=$(curl -s https://api.github.com/repos/v2ray/v2ray-core/releases/latest | grep tag_name | awk  -F '"' '{print $4}')
 ENV V2RAY_LOG_DIR /var/log/v2ray
 ENV V2RAY_CONFIG_DIR /etc/v2ray/
 ENV V2RAY_DOWNLOAD_URL https://github.com/v2ray/v2ray-core/releases/download/${V2RAY_VERSION}/v2ray-linux-64.zip
